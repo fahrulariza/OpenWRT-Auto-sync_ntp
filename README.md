@@ -1,0 +1,1 @@
+# OpenWRT-Auto-sync_ntp
