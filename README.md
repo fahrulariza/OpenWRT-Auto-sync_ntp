@@ -7,6 +7,6 @@
 ![Top Language](https://img.shields.io/github/languages/top/fahrulariza/OpenWRT-Auto-sync_ntp)
 [![Open Issues](https://img.shields.io/github/issues/fahrulariza/OpenWRT-Auto-sync_ntp)](https://github.com/fahrulariza/OpenWRT-Auto-sync_ntp/issues)
 
-<h1>Auto Sync NTP sederhana untuk OpenWrt</h1>
+<h1>Auto Sync NTP sederhana melalui adb dan ntp di OpenWrt</h1>
 <p>Kelola router OpenWrt Anda dengan mudah!</p>
 </div>
