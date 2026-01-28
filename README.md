@@ -150,3 +150,36 @@ Alur Logika Script Sinkronisasi Waktu OpenWRT:
           │           exit 0                    │
           └─────────────────────────────────────┘
 ```
+
+
+
+
+Struktur Direktori Audio:
+```
+/www/audio/
+├── angka/
+│   ├── 0.wav, 1.wav, ..., 10.wav, 11.wav, ...
+│   ├── 20.wav, 30.wav, ...
+│   ├── tahun.wav, tanggal.wav, jam.wav
+│   ├── lewat.wav, wib.wav
+├── bulan/
+│   ├── januari.wav, februari.wav, ...
+├── pembuka/
+│   ├── ntp_pembuka_berhasil.wav
+│   └── ntp_pembuka_gagal.wav
+```
+
+Format Pengumuman:
+```
+Berhasil: "[pembuka] tahun [tahun] bulan [nama bulan] tanggal [tanggal] jam [jam] lewat [menit] wib"
+Gagal:    "[pembuka gagal]"
+```
+
+Command Penting:
+paplay - Memutar audio via PulseAudio
+
+sntp - Client NTP sederhana di OpenWRT
+
+adb - Android Debug Bridge (harus terinstall)
+
+date -s - Set waktu sistem
