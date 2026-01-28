@@ -28,19 +28,16 @@ Script ini bekerja dengan sistem prioritas bertingkat (fallback). Tujuannya adal
    - Jika terdeteksi, script mengambil waktu dari HP Android tersebut.
    - Ini sangat berguna jika OpenWrt tidak punya akses internet tapi terhubung ke HP.
    - Jika berhasil, variabel SYNC_SUCCESS diatur ke angka 2.
-3. Prioritas 2: Sinkronisasi via NTP (Online/Internet)
+3. Prioritas 2: Sinkronisasi via NTP (Online/Internet)<br>
    Jika ADB gagal (tidak ada HP), script beralih ke internet:
    - Script mendeteksi semua antarmuka jaringan (eth0, wlan0, dll).
    - Script mencoba satu per satu server NTP menggunakan perintah sntp.
    - Jika berhasil, variabel SYNC_SUCCESS diatur ke angka 1.
-4. Output Suara (Text-to-Speech Manual)
-   - Setelah waktu didapat, script menjalankan rentetan pemutaran audio:
-
-Mengecek apakah ada proses paplay lain yang berjalan agar suara tidak tumpang tindih.
-
-Memutar urutan: Tahun -> Bulan -> Tanggal -> Jam -> Menit.
-
-Jika semua metode sinkronisasi gagal, script akan memutar audio pemberitahuan gagal.
+4. Output Suara (Text-to-Speech Manual) <br>
+   Setelah waktu didapat, script menjalankan rentetan pemutaran audio:
+   - Mengecek apakah ada proses paplay lain yang berjalan agar suara tidak tumpang tindih.
+   - Memutar urutan: Tahun -> Bulan -> Tanggal -> Jam -> Menit.
+   - Jika semua metode sinkronisasi gagal, script akan memutar audio pemberitahuan gagal.
 
 
 Alur Utama:
