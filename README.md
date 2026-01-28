@@ -50,6 +50,15 @@ Alur Logika Script Sinkronisasi Waktu OpenWRT:
 5. Start Service NTP - Mengaktifkan kembali layanan NTP
 
 ```
+1. STOP NTP SERVICE
+   ↓
+2. CARI WAKTU DARI:
+   ┌─► ADB (Android) → PRIORITAS
+   │
+   └─► NTP (Internet) → CADANGAN
+```   
+
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                         MULAI                               │
 └───────────────────────────┬─────────────────────────────────┘
@@ -175,11 +184,8 @@ Berhasil: "[pembuka] tahun [tahun] bulan [nama bulan] tanggal [tanggal] jam [jam
 Gagal:    "[pembuka gagal]"
 ```
 
-Command Penting:
-paplay - Memutar audio via PulseAudio
-
-sntp - Client NTP sederhana di OpenWRT
-
-adb - Android Debug Bridge (harus terinstall)
-
-date -s - Set waktu sistem
+Command yang digunakan:
+`paplay` - Memutar audio via PulseAudio
+`sntp` - Client NTP sederhana di OpenWRT
+`adb` - Android Debug Bridge (harus terinstall)
+`date -s` - Set waktu sistem
