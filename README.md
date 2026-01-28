@@ -10,3 +10,8 @@
 <h1>Auto Sync NTP sederhana melalui adb dan ntp di OpenWrt</h1>
 <p>Kelola router OpenWrt Anda dengan mudah!</p>
 </div>
+
+Cara Kerja Script di OpenWRT
+Script ini berfungsi untuk sinkronisasi waktu dengan prioritas ADB terlebih dahulu, lalu NTP sebagai cadangan, diikuti pengumuman audio dalam bahasa Indonesia tentang waktu saat ini.
+
+Script shell yang Anda buat sangat menarik! Ini adalah solusi cerdas untuk sinkronisasi waktu pada perangkat OpenWrt yang mungkin tidak memiliki RTC (Real Time Clock) baterai, dengan menambahkan feedback suara.
