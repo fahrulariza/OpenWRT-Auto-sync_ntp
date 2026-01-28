@@ -194,7 +194,7 @@ Gagal:    "[pembuka gagal]"
 ```
 
 Command yang digunakan:
-`paplay` - Memutar audio via PulseAudio
-`sntp` - Client NTP sederhana di OpenWRT
-`adb` - Android Debug Bridge (harus terinstall)
-`date -s` - Set waktu sistem
+`paplay` - Memutar audio via PulseAudio <br>
+`sntp` - Client NTP sederhana di OpenWRT <br>
+`adb` - Android Debug Bridge (harus terinstall) <br>
+`date -s` - Set waktu sistem <br>
