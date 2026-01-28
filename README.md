@@ -40,7 +40,7 @@ Script ini bekerja dengan sistem prioritas bertingkat (fallback). Tujuannya adal
    - Jika semua metode sinkronisasi gagal, script akan memutar audio pemberitahuan gagal.
 
 
-Alur Utama:
+Alur Logika Script Sinkronisasi Waktu OpenWRT:
 1. Stop Service NTP - Menghentikan layanan NTP bawaan OpenWRT
 2. Prioritas ADB - Mencoba sinkronisasi waktu dari perangkat Android yang terhubung via ADB
 3. Cadangan NTP - Jika ADB gagal, mencoba sinkronisasi dengan server NTP
@@ -48,3 +48,105 @@ Alur Utama:
    - Berhasil via ADB/NTP: Mengumumkan tahun, bulan, tanggal, jam, menit
    - Gagal semua: Memutar audio gagal
 5. Start Service NTP - Mengaktifkan kembali layanan NTP
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                         MULAI                               │
+└───────────────────────────┬─────────────────────────────────┘
+                            ▼
+          ┌─────────────────────────────────────┐
+          │   1. HENTIKAN LAYANAN NTP BAWAAN    │
+          └─────────────────┬───────────────────┘
+                            ▼
+          ┌─────────────────────────────────────┐
+          │     2. COBA SINKRONISASI ADB        │
+          │     (Android Debug Bridge)          │
+          └─────────────────┬───────────────────┘
+                            │
+                  ┌─────────┴─────────┐
+                  │                   │
+            [ADA PERANGKAT]      [TIDAK ADA]
+                  │                   │
+            ┌─────▼─────┐     ┌──────▼────────────┐
+            │AMBIL WAKTU│     │LANGSUNG KE NTP    │
+            └─────┬─────┘     │(Lewati ADB)       │
+                  │           └──────┬────────────┘
+            ┌─────▼─────┐           │
+            │SET WAKTU  │           │
+            └─────┬─────┘           │
+                  │                 │
+          ┌───────▼────────────┬────▼────────────┐
+          │                    │                 │
+          ▼                    ▼                 ▼
+   [ADB BERHASIL]       [ADB GAGAL]      [SKIP ADB]
+   STATUS = 2           │                 │
+          │             │                 │
+          │             └──────┬──────────┘
+          │                    │
+          │             ┌──────▼────────────────────┐
+          │             │  3. COBA SINKRONISASI NTP │
+          │             │  (Network Time Protocol)  │
+          │             └──────┬────────────────────┘
+          │                    │
+          │             ┌──────▼────────────┐
+          │             │COBA SEMUA SERVER  │
+          │             │DAN INTERFACE      │
+          │             └──────┬────────────┘
+          │                    │
+          │             ┌──────▼────────────┐
+          │             │ ADA YANG BERHASIL?│
+          │             └──────┬────────────┘
+          │                    │
+          │          ┌─────────┴─────────┐
+          │          │                   │
+          │          ▼                   ▼
+          │   [NTP BERHASIL]      [NTP GAGAL]
+          │   STATUS = 1          STATUS = 0
+          │          │                   │
+          └──────────┼───────────────────┘
+                     │
+          ┌──────────▼─────────────────────────┐
+          │     4. PROSES HASIL SINKRONISASI   │
+          └──────────┬─────────────────────────┘
+                     │
+       ┌─────────────┴─────────────┬──────────────┐
+       │                           │              │
+       ▼                           ▼              ▼
+┌─────────────┐           ┌─────────────┐  ┌─────────────┐
+│ JALUR 1     │           │ JALUR 2     │  │ JALUR 3     │
+│ ADB BERHASIL│           │ NTP BERHASIL│  │ SEMUA GAGAL │
+│ (STATUS=2)  │           │ (STATUS=1)  │  │ (STATUS=0)  │
+└──────┬──────┘           └──────┬──────┘  └──────┬──────┘
+       │                         │                │
+       ▼                         ▼                ▼
+┌──────────────┐          ┌──────────────┐ ┌──────────────┐
+│Tunggu audio  │          │Tunggu audio  │ │Tunggu audio  │
+│selesai jika  │          │selesai jika  │ │selesai jika  │
+│sedang diputar│          │sedang diputar│ │sedang diputar│
+└──────┬───────┘          └──────┬───────┘ └────────┬─────┘
+       │                         │                  │
+       ▼                         ▼                  ▼
+┌────────────────┐        ┌────────────────┐  ┌────────────┐
+│Putar:          │        │Putar:          │  │Putar:      │
+│1. ntp_pembuka  │        │1. ntp_pembuka  │  │ntp_pembuka │
+│   _berhasil.wav│        │   _berhasil.wav│  │_gagal.wav  │
+│2. Tahun        │        │2. Tahun        │  │            │
+│3. Bulan        │        │3. Bulan        │  │            │
+│4. Tanggal      │        │4. Tanggal      │  │            │
+│5. Jam          │        │5. Jam          │  │            │
+│6. Menit        │        │6. Menit        │  │            │
+│7. WIB          │        │7. WIB          │  │            │
+└──────┬─────────┘        └──────┬─────────┘  └──────┬─────┘
+       │                         │                   │
+       └─────────────┬───────────┴───────────────────┘
+                     │
+          ┌──────────▼─────────────────────────┐
+          │     5. HIDUPKAN KEMBALI NTP        │
+          │     /etc/init.d/sysntpd start      │
+          └──────────┬─────────────────────────┘
+                     │
+          ┌──────────▼─────────────────────────┐
+          │            SELESAI                  │
+          │           exit 0                    │
+          └─────────────────────────────────────┘
+```
