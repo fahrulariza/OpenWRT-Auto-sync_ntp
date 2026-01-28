@@ -56,6 +56,15 @@ Alur Logika Script Sinkronisasi Waktu OpenWRT:
    ┌─► ADB (Android) → PRIORITAS
    │
    └─► NTP (Internet) → CADANGAN
+3. HASIL PENCARIAN:
+   ├─► BERHASIL via ADB → Status = 2
+   ├─► BERHASIL via NTP → Status = 1
+   └─► GAGAL semua → Status = 0
+4. BERDASARKAN STATUS:
+   ├─► Status 2/1: Putar "Berhasil" + Waktu
+   └─► Status 0: Putar "Gagal"
+   
+5. START NTP SERVICE
 ```   
 
 ```
