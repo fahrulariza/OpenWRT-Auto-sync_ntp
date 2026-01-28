@@ -23,8 +23,8 @@ Script ini bekerja dengan sistem prioritas bertingkat (fallback). Tujuannya adal
    - Variabel: Script menetapkan lokasi file audio dan daftar server NTP (Google dan OpenWrt pool).
    - Fungsi Audio: Dibuat fungsi play_audio dan play_tens_number. Logika play_tens_number cukup pintar karena bisa memecah angka menjadi puluhan dan satuan (misal: 25 menjadi "dua puluh" + "lima").
    - Stop Service: Script menghentikan sysntpd bawaan agar tidak terjadi konflik saat script mencoba mengatur waktu secara manual.
-2. Prioritas 1: Sinkronisasi via ADB (Offline/Kabel)
-   - Script pertama kali mencari perangkat Android yang terhubung via kabel data (ADB).
+2. Prioritas 1: Sinkronisasi via ADB (Offline/Kabel)<br>
+   Script pertama kali mencari perangkat Android yang terhubung via kabel data (ADB).
    - Jika terdeteksi, script mengambil waktu dari HP Android tersebut.
    - Ini sangat berguna jika OpenWrt tidak punya akses internet tapi terhubung ke HP.
    - Jika berhasil, variabel SYNC_SUCCESS diatur ke angka 2.
@@ -45,6 +45,6 @@ Alur Utama:
 2. Prioritas ADB - Mencoba sinkronisasi waktu dari perangkat Android yang terhubung via ADB
 3. Cadangan NTP - Jika ADB gagal, mencoba sinkronisasi dengan server NTP
 4. Pengumuman Audio - Memutar audio berdasarkan hasil sinkronisasi:
-5. Berhasil via ADB/NTP: Mengumumkan tahun, bulan, tanggal, jam, menit
+   - Berhasil via ADB/NTP: Mengumumkan tahun, bulan, tanggal, jam, menit
    - Gagal semua: Memutar audio gagal
-   - Start Service NTP - Mengaktifkan kembali layanan NTP
+5. Start Service NTP - Mengaktifkan kembali layanan NTP
